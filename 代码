@@ -1,0 +1,26 @@
+import urllib.request
+from pyheatmap.heatmap import HeatMap
+
+def main():
+
+    # 下载测试数据
+    url = "https://raw.github.com/oldj/pyheatmap/master/examples/test_data.txt"
+    sdata = urllib.request.urlopen(url).read().split("\n".encode(encoding="utf-8"))
+#python 3要用urllib.requese
+#python3 要用utf-8
+#http://blog.csdn.net/bible_reader/article/details/53047550 关于这个问题
+    data = []
+    for ln in sdata:
+        a = ln.split(",".encode(encoding="utf-8"))
+        if len(a) != 2:
+            continue
+        a = [int(i) for i in a]
+        data.append(a)
+
+    # 开始绘制
+    hm = HeatMap(data)
+    hm.clickmap(save_as="hit.png")
+    hm.heatmap(save_as="heat.png")
+
+if __name__ == "__main__":
+    main()
